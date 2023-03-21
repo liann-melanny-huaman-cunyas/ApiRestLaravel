@@ -1,0 +1,67 @@
+Metodos HTTP
+
+    - GET : "OBSERVAR DATOS" //solicitar
+    - POST : "CREAR UN NUEVO REGISTRO" //enviar informacion
+    - PUT : "ACTUALIZAR TODOS LOS CAMPOS"
+    - PATCH : "ACTUALIZAR CAMPOS ESPECIFICOS"
+    - SHOW
+    - DELETE : "ELIMINAR"
+
+PROTOCOLOS HTTP
+
+    1xx : Codigos de informacion
+    2xx : Codigos exitosos
+    3xx : Codigos de redireccion
+    4xx : Errores HTTP de cliente
+    5xx : Errotes del servidor
+
+ENDPOINTS
+    Version 1
+        - Configuracion DE ARCHIVOS
+        - Recurso RETORNAR
+        - Coleccion datos [recurso1, recurso2 ...]RETORNAR
+
+
+    Vinculo
+        - http://laravel-api.test/apiv2/post/1
+
+        1. Controlador de la Api/V1  [NombreController] --api --model=(Conectado al Model)
+        2. Usar solo show (return @forech)
+        3. Routes/Api -> 'nombre' 'class de la V1' ->format (App\....)
+        4. Usar postman
+
+    Recurso (formato) -> Un solo dato
+        1. Resource de la V1 V1\PostResource
+        2. Modificar el formato en PostResource EN UN ARRAY
+        3. En el Controller se extendiende de PostResource....
+        4. MOdifica el return format return new (nombreResource)($parametro-)
+
+        -> Tenemos una ruta
+            routes\api.php
+            Route::apiResource('NOmbreRuta', (App\Http\Controlller.... ::class))
+            Route::apiResource('v1/posts',App\Http\Controllers\Api\V1\PostController::class)-
+            >only('show');
+
+        -> La ruta dispara un controlador
+            app\Http\Controlller
+            Controller  Api/V1  [NombreController] --api --model=(Conectado al Model)
+
+        -> el controlador tiene dentro una acción
+            app\Http\Controlller\Api\V1
+            Usar solo show
+            En el Controller se extendiende de PostResource.
+            return new PostResource($post);
+
+        -> esta acción retorna ese recurso y
+            eso es lo que le mostramos al usuario
+            o al software que se vaya a conectar a nuestra aplicación.
+            app\Http\Resource\Api\V1
+            *Se puede modificar el formato
+
+   El ciclo de Api
+    Me conecto desde la api
+        * Routes\api.php
+    Ejecuto una accion
+        * app\Http\Resource\Api\V1\PostController
+    Doy una respuesta
+        * Postman
